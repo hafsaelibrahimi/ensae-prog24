@@ -120,5 +120,20 @@ class Grid():
                 initial_state[i_line] = line_state
             grid = Grid(m, n, initial_state)
         return grid
+#Question 4 : Représentation graphique 
+    def trace (self):
+        fig, ax=plt.subplots()
+        valeur_min, valeur_max = 1, self.n*self.m
+        for i in range(self.m):
+            for j in range(self.n):
+                c = self.state[i][j]
+                ax.texte(i+0.5, j+0.5, str(c), va='center', ha='center')
+        plt.matshow(self.self, cmap=plt.cm.Blues)
+        ax.set_xlim(valeur_min, valeur_max)
+        ax.set_ylim(valeur_min, valeur_max)
+        ax.set_xticks(np.arange(valeur_max))
+        ax.set_yticks(np.arange(valeur_max))
+        ax.grid()
+        plt.show()
 
 
