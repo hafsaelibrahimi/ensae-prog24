@@ -43,7 +43,7 @@ class Solver():
                 swap_to_do.append(((x, y), (x + 1, y)))
                 x += 1
             elif b < y:
-                swap_to_do.append(((x, y), (x, y - 1)))
+                swap_to_do.append(((x, y), (x, y - 1))) 
                 y -= 1
             elif b > y:
                 swap_to_do.append(((x, y), (x, y + 1)))
@@ -64,8 +64,8 @@ class Solver():
                     if self.grid[i][j] == k:
                         i_start = i 
                         j_start = j
-            j_goal = (k % self.n - 1)
-            i_goal = k // self.n
+            j_goal = (k % self.n) -1
+            i_goal = (k -j-1)// self.n 
             for u in self.list_swap(i_goal, j_goal, i_start, j_start) : 
                 self.swap_solver(u[0], u[1])
                 movements.append(u)

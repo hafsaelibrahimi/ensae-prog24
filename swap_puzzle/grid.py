@@ -1,7 +1,8 @@
 """
 This is the grid module. It contains the Grid class and its associated methods.
 """
-
+import matplotlib.pyplot as plt
+import numpy as np
 import random
 
 class Grid():
@@ -127,8 +128,8 @@ class Grid():
         for i in range(self.m):
             for j in range(self.n):
                 c = self.state[i][j]
-                ax.texte(i+0.5, j+0.5, str(c), va='center', ha='center')
-        plt.matshow(self.self, cmap=plt.cm.Blues)
+                ax.text(i+0.5, j+0.5, str(c), va='center', ha='center')
+        plt.matshow(self.state, cmap=plt.cm.Blues)
         ax.set_xlim(valeur_min, valeur_max)
         ax.set_ylim(valeur_min, valeur_max)
         ax.set_xticks(np.arange(valeur_max))
