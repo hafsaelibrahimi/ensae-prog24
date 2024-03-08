@@ -156,5 +156,18 @@ class Grid():
             for perm in permutations_of_remainder:
                 results.append((first_element,) + perm)
         return results
-            
+    
+    def voisin(tupl):
+        liste_tuple=[]
+        for i in range (self.m): 
+            for j in (self.n):
+                liste_tuple.append(list(tupl[j*self.n, j*self.n+n-1])) #on transforme le tuple en une liste de liste (comme une grille)
+        for i in range (self.m): 
+            for j in range (self.n):
+
+
+
+
+
+
 
