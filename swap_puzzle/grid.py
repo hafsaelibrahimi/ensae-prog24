@@ -181,7 +181,7 @@ class Grid():
         numbers_list = [i for i in range(1, self.n*self.m+1)]
         numbers_tuple = tuple(numbers_list)
         graph = Graph(self.permutation (numbers_tuple))
-        for nod in graph.nodes:
+        for nod in graph.nodes: 
             voisins = self.from_ch_to_grid(nod).tvoisins()
             for v in voisins:
                 if (nod, v) not in graph.edges and (v, nod) not in graph.edges:
