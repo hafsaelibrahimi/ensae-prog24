@@ -156,4 +156,3 @@ class Graph:
                 else:
                     raise Exception("Format incorrect")
         return graph
-

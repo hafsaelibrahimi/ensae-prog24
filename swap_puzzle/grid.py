@@ -1,6 +1,7 @@
 """
 This is the grid module. It contains the Grid class and its associated methods.
 """
+from graph import Graph
 import matplotlib.pyplot as plt
 import numpy as np
 import random
@@ -157,13 +158,52 @@ class Grid():
                 results.append((first_element,) + perm)
         return results
     
-    def voisin(tupl):
-        liste_tuple=[]
-        for i in range (self.m): 
-            for j in (self.n):
-                liste_tuple.append(list(tupl[j*self.n, j*self.n+n-1])) #on transforme le tuple en une liste de liste (comme une grille)
-        for i in range (self.m): 
-            for j in range (self.n):
+    def voisin(self, tupl):
+        liste_tuple = []
+        for i in range(self.m): 
+            for j in range(self.n):
+                liste_tuple.append(list(tupl[j*self.n : j*self.n+self.n])) # Correction de cette ligne
+        voisin = []
+        for i in range(self.m):  
+            for j in range(self.n):
+                if j + 1 < self.n:
+                    # Swap horizontal
+                    new_grid = Grid(self.m, self.n, liste_tuple)
+                    new_grid.swap((i, j), (i, j+1))
+                    voisin.append(new_grid)
+                if i + 1 < self.m:
+                    # Swap vertical
+                    new_grid = Grid(self.m, self.n, liste_tuple)
+                    new_grid.swap((i, j), (i+1, j))
+                    voisin.append(new_grid)
+        return voisin
+    def grid_to_graph(self):
+        numbers_list = [i for i in range(1, self.n*self.m+1)]
+        numbers_tuple = tuple(numbers_list)
+        graph = Graph(self.permutation (numbers_tuple))
+        for nod in graph.nodes:
+            voisins = self.from_ch_to_grid(nod).tvoisins()
+            for v in voisins:
+                if (nod, v) not in graph.edges and (v, nod) not in graph.edges:
+                    graph.add_edge(v, nod)
+        return graph
+
+    def find_path_grille(graph, initial_tuple, target_tuple):
+        # Trouver toutes les permutations du tuple initial
+        permutations = self.generate_permutations(tuple_initial)
+
+        # Créer un dictionnaire pour stocker les voisins de chaque permutation
+        neighbors_dict = {}
+
+        for perm in permutations:
+            # Trouver les voisins de chaque permutation
+            neighbors = self.voisin(perm)
+            neighbors_dict[perm] = neighbors
+
+        # Trouver le plus court chemin entre le tuple initial et le tuple cible
+        shortest_path = graph.bfs(tuple_initial, target_tuple)
+
+        return neighbors_dict, shortest_path
 
 
 
