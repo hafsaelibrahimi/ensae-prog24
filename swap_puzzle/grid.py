@@ -136,5 +136,25 @@ class Grid():
         ax.set_yticks(np.arange(valeur_max))
         ax.grid()
         plt.show()
-
+#Question 6: Nous proposons de représenter chaque grille sous forme de tuple.
+    def tuple_from_grid(self):
+        tuple = ()
+        for i in range (self.m):
+            for j in range (self.n):
+                tuple = tuple + (self.state[i][j],)
+        return tuple
+#Question 8: 
+#D'abord nous allons déterminer tous les états possibles de la grille
+    def generate_permutations(tup):
+        if len(tup) <= 1:
+            return [tup]  # Si le tuple contient un seul élément, retourner ce tuple
+        results = []
+        for i in range(len(tup)):
+            first_element = tup[i]
+            remaining_elements = tup[:i] + tup[i+1:]
+            permutations_of_remainder = generate_permutations(remaining_elements)
+            for perm in permutations_of_remainder:
+                results.append((first_element,) + perm)
+        return results
+            
 

@@ -111,6 +111,19 @@ class Graph:
                         ongoing.append(s)
             ongoing = ongoing[1:]
         return path[dst]
+        # Associe à chaque sommet la longueur du chemin le plus court permettant d'y accéder en partant de la src.
+        path[src] = 0
+        ongoing = [src]
+        while ongoing :
+            e = ongoing[0]
+            if e == dst :
+                break
+            for s in self.graph[e] :
+                    if s not in path :
+                        path[s] = path[e] + 1
+                        ongoing.append(s)
+            ongoing = ongoing[1:]
+        return path[dst]
     @classmethod
     @classmethod
     def graph_from_file(cls, file_name):

@@ -10,7 +10,7 @@ class TestSolver(unittest.TestCase):
         grid1 = Grid.grid_from_file("input/grid1.in")
         
         # Créer une instance de Solver pour résoudre la grille
-        solver = Solver(grid1.m, grid1.n, grid1.state)
+        solver = Solver(grid1.state)
         
         # Obtenir la solution
         solution = solver.get_solution()
@@ -22,7 +22,7 @@ class TestSolver(unittest.TestCase):
         grid2 = Grid.grid_from_file("input/grid2.in")
         
         # Créer une instance de Solver pour résoudre la grille
-        solver = Solver(grid2.m, grid2.n, grid2.state)
+        solver = Solver(grid2.state)
         
         # Obtenir la solution
         solution = solver.get_solution()
