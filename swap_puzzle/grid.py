@@ -250,3 +250,71 @@ class Grid():
 
         # Si aucun chemin optimal n'a été trouvé, retourner None
         return None
+
+    def play(grid):
+        moves = 0
+        while not grid.is_sorted():
+            print("Current Grid:")
+            for row in grid.state:
+                print(row)
+            print("Enter the coordinates of the cells you want to swap (x1 y1 x2 y2):")
+            x1, y1, x2, y2 = map(int, input().split())
+            grid.swap((x1, y1), (x2, y2))
+            moves += 1
+        print("Congratulations! You solved the puzzle in", moves, "moves. You could have solved it in", len(Graph(Grid.generate_permutation(sorted)).Astar(g,sorted)), "moves."
+
+ 
+    def generate_grids(m, n):
+        grids_by_difficulty = [[] for _ in range(4)]
+
+        max_heuristic = (m * n) * (m + n) // 2
+        heuristic_step = max_heuristic // 4
+
+        for i in range(m * n):
+            for j in range(m * n):
+                initial_state = [[i * n + j + 1 for j in range(n)] for i in range(m)]
+                flat_state = [num for sublist in initial_state for num in sublist]
+                random.shuffle(flat_state)
+                initial_state = [flat_state[i * n:(i + 1) * n] for i in range(m)]
+                grid = Grid(m, n, initial_state)
+                heuristic_value = grid.heuristic()
+
+            # Trouver le niveau de difficulté
+                difficulty_level = min(4, heuristic_value // heuristic_step)
+                grids_by_difficulty[difficulty_level].append(grid)
+
+        return grids_by_difficulty
+
+# Fonction pour choisir une grille en fonction du niveau de difficulté
+    def choose_grid(difficulty):
+        return random.choice(generate_grids(m,n)[difficulty])
+
+# Pour jouer à un certain niveau de difficulé
+
+    def play_difficulty(difficulty):
+        play(choose_grid(difficulty)
+
+
+    def generate_swap_sequences(grids):
+        swap_sequences = []
+
+        for i in range(len(grids) - 1):
+            current_grid = grids[i]
+            next_grid = grids[i + 1]
+
+            swap_sequence = find_swap_sequence(current_grid, next_grid)
+            swap_sequences.append(swap_sequence)
+
+        return swap_sequences
+
+    def find_swap_sequence(tuple1, tuple2):
+        swap = ((),())
+        grid1 = list(tuple1)
+        grid2 = list(tuple2)
+        for i, num1 in enumerate(grid1):
+            if num1 != grid2[i]:
+                for j, num2 in enumerate(grid1):
+                    if num2 == grid2[i]:
+                        swap = ((i, (i % self.n)), j, (j % self.n))
+                        break
+        return swap
