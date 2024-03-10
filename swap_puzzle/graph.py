@@ -124,6 +124,51 @@ class Graph:
                         ongoing.append(s)
             ongoing = ongoing[1:]
         return path[dst]
+
+    from collections import deque
+
+def bfs_deque(self, src, dst):
+    """
+    Finds a shortest path from src to dst by BFS.  
+
+    Parameters: 
+    -----------
+    src: NodeType
+        The source node.
+    dst: NodeType
+        The destination node.
+
+    Output: 
+    -------
+    path: list[NodeType] | None
+        The shortest path from src to dst. Returns None if dst is not reachable from src
+    """ 
+    path = {}
+    # Associe à chaque sommet la longueur du chemin le plus court permettant d'y accéder en partant de la src.
+    path[src] = 0
+    ongoing = deque([src])  # Initialisation du deque avec la source
+    while ongoing:
+        e = ongoing.popleft()  # Prend le premier élément du deque
+        if e == dst:
+            break
+        for s in self.graph[e]:
+            if s not in path:
+                path[s] = path[e] + 1
+                ongoing.append(s)  # Ajoute le voisin non visité au deque
+    if dst not in path:
+        return None  # Si la destination n'est pas atteignable depuis la source, retourne None
+    # Construction du chemin
+    shortest_path = [dst]
+    current_node = dst
+    while current_node != src:
+        for neighbor in self.graph[current_node]:
+            if path.get(neighbor, float('inf')) == path[current_node] - 1:
+                shortest_path.append(neighbor)
+                current_node = neighbor
+                break
+    shortest_path.reverse()
+    return shortest_path
+    
     @classmethod
     @classmethod
     def graph_from_file(cls, file_name):
