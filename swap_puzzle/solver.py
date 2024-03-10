@@ -4,7 +4,7 @@ class Solver():
     """
     A solver class, to be implemented.
     """
-    def _init_(self, grid):
+    def __init__(self, grid):
         self.grid = grid 
 
 
