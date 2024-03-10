@@ -5,7 +5,8 @@ from graph import Graph
 import matplotlib.pyplot as plt
 import numpy as np
 import random
-
+import heapq
+from collections import deque
 class Grid():
     """
     A class representing the grid from the swap puzzle. It supports rectangular grids. 
@@ -197,7 +198,6 @@ class Grid():
         longueur_chemin_plus_court = graph.bfs_deque(initial_tuple, target_tuple)
 
         return longueur_chemin_plus_court
-    
     def heuristique(self):
         weight = 0
         for i in range(self.m):
@@ -205,7 +205,48 @@ class Grid():
                 # Calcul de la position attendue pour le nombre actuel
                 expected_row = (self.state[i][j] - 1) // self.n
                 expected_col = (self.state[i][j] - 1) % self.n
-                # Calcul de la distance de Manhattan et ajout au poids total
                 weight += abs(i - expected_row) + abs(j - expected_col)
         return weight // 2
+    def heuristique2(self, state):
+        weight = 0
+        for i in range(self.m):
+            for j in range(self.n):
+            # Calcul de la position attendue pour le nombre actuel
+                expected_row = (state[i * self.n + j] - 1) // self.n
+                expected_col = (state[i * self.n + j] - 1) % self.n
+                weight += abs(i - expected_row) + abs(j - expected_col)
+        return weight // 2
+    def Astar(self):
+        dst = tuple(range(1, self.n * self.m + 1))
+        tupl_grille = self.tuple_from_grid()
+        permutations = Grid.generate_permutations(tupl_grille)
+        graph = Graph()
+        # Ajouter des nœuds au graphe pour chaque permutation
+        for perm in permutations:
+            graph.graph[perm] = []
+        # Ajouter des arêtes au graphe en fonction des voisins
+        for perm in permutations:
+            voisins = self.voisin(perm)
+            for voisin in voisins:
+                graph.add_edge(perm, voisin)
+        paths = {tupl_grille: []}
+        priority_queue = [(self.heuristique(), perm) for perm in permutations]
+        while priority_queue:
+            cost, current_state = heapq.heappop(priority_queue)
+            if current_state == dst:
+                return [tupl_grille]+paths[current_state] 
+            # Parcourir les voisins de l'état actuel dans le graphe
+            for neighbor in graph.graph[current_state]:
+                # Calculer le coût heuristique pour le voisin
+                neighbor_cost = self.heuristique2(neighbor)
 
+                # Vérifier si le voisin n'a pas encore été visité ou si un chemin plus court a été trouvé
+                if neighbor not in paths or len(paths[neighbor]) > len(paths[current_state]) + 1:
+                    # Mettre à jour le chemin jusqu'au voisin
+                    paths[neighbor] = paths[current_state] + [neighbor]
+
+                    # Ajouter le voisin à la file de priorité avec son coût estimé
+                    heapq.heappush(priority_queue, (neighbor_cost, neighbor))
+
+        # Si aucun chemin optimal n'a été trouvé, retourner None
+        return None
