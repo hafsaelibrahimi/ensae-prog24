@@ -194,7 +194,18 @@ class Grid():
                 graph.add_edge(perm, voisin)
 
     # Utiliser BFS sur le graphe pour trouver le chemin le plus court
-        longueur_chemin_plus_court = graph.bfs(initial_tuple, target_tuple)
+        longueur_chemin_plus_court = graph.bfs_deque(initial_tuple, target_tuple)
 
         return longueur_chemin_plus_court
+    
+    def heuristique(self):
+        weight = 0
+        for i in range(self.m):
+            for j in range(self.n):
+                # Calcul de la position attendue pour le nombre actuel
+                expected_row = (self.state[i][j] - 1) // self.n
+                expected_col = (self.state[i][j] - 1) % self.n
+                # Calcul de la distance de Manhattan et ajout au poids total
+                weight += abs(i - expected_row) + abs(j - expected_col)
+        return weight // 2
 
