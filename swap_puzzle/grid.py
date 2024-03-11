@@ -261,9 +261,8 @@ class Grid():
             x1, y1, x2, y2 = map(int, input().split())
             grid.swap((x1, y1), (x2, y2))
             moves += 1
-        print("Congratulations! You solved the puzzle in", moves, "moves. You could have solved it in", len(Graph(Grid.generate_permutation(sorted)).Astar(g,sorted)), "moves."
+        print("Congratulations! You solved the puzzle in", moves, "moves. You could have solved it in", len(Graph(Grid.generate_permutation(sorted)).Astar(g,sorted)), "moves.")
 
- 
     def generate_grids(m, n):
         grids_by_difficulty = [[] for _ in range(4)]
 
@@ -292,7 +291,7 @@ class Grid():
 # Pour jouer à un certain niveau de difficulé
 
     def play_difficulty(difficulty):
-        play(choose_grid(difficulty)
+        play(choose_grid(difficulty))
 
 
     def generate_swap_sequences(grids):
