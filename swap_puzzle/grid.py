@@ -251,6 +251,8 @@ class Grid():
         # Si aucun chemin optimal n'a été trouvé, retourner None
         return None
 
+        
+#LA PARTIE:  JEU
     def play(grid):
         moves = 0
         while not grid.is_sorted():
