@@ -145,7 +145,7 @@ class Grid():
             for j in range (self.n):
                 tuple = tuple + (self.state[i][j],)
         return tuple
-#Question 8: 
+#Question 7: 
 #D'abord nous allons déterminer tous les états possibles de la grille
     def generate_permutations(tup):
         if len(tup) <= 1:
